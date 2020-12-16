@@ -1,0 +1,97 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+// Configuration for shading your plugin's dependencies but not implementations
+configurations {
+    shade.extendsFrom implemetation
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// ========== Properties ==========
+group 'org.example'
+version '1.0'
+String main = 'pkg.APlugin'
+String author = 'cyberpwn'
+String description = 'An example Shuriken Plugin'
+String pluginsFolder = "C:\\Users\\cyberpwn\\Documents\\development\\server\\plugins";
+
+// ========== Dependencies ==========
+dependencies {
+    implementation 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT'
+    implementation 'ninja.bytecode.shuriken:shuriken-bukkit:2.0.8'
+
+    // You can implement libraries as classpath only if they are already on mc servers
+    // implementation 'some:library:2.2.3'
+
+    // You can shade libraries into your output jar using this
+    // shade 'some:library:2.2.3'
+}
+
+// ========== Repositories ==========
+repositories {
+    maven {
+        // Most repositories are mirrored and cached in volmit.
+        // If you would like us to cache your repository or one you need
+        // Send a message to cyberpwn#1337 on discord about it, happy to proxy!
+        url = "http://repo.volmit.com/repository/volmit/"
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+// ========== Internal configurations ==========
+void configureShadow(boolean dev, String pluginsFolder)
+{
+    String archiveName = rootProject.name + "-" + rootProject.version + ".jar"
+    String archiveNameDev = rootProject.name + "-dev.jar"
+    String archivePath = dev ? pluginsFolder : project.getRootDir().getAbsolutePath() + "\\release\\" + project.version
+    String archiveFilePath = archivePath + "\\" + archiveNameDev
+    String archiveFilePathRelease = archivePath + "\\" + archiveName
+
+    shadowJar {
+        zip64 true
+        minimize()
+        configurations = [project.configurations.shade]
+        archiveFileName = dev ? archiveFilePath : archiveFilePathRelease
+    }
+}
+
+configureShadow(true, pluginsFolder)
+
+// You can filter additional resources through the plugin.yml here
+processResources {
+    expand(
+        version: version,
+        name: project.name,
+        main: main,
+        author: author,
+        description: description
+    )
+}
+
+task configDev {
+    group 'other'
+    doLast{
+        configureShadow(true, pluginsFolder)
+    }
+}
+
+task configRelease {
+    group 'other'
+    doLast{
+        configureShadow(false, pluginsFolder)
+    }
+}
+
+task jarRelease {
+    group 'shuriken'
+    dependsOn 'configRelease'
+    dependsOn 'shadowJar'
+}
+
+task jarDevelopment {
+    group 'shuriken'
+    dependsOn 'configDev'
+    dependsOn 'shadowJar'
+}
