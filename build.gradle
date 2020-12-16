@@ -10,17 +10,20 @@ configurations {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // ========== Properties ==========
-group 'org.example'
+group 'org.puretie.pcp'
 version '1.0'
-String main = 'pkg.APlugin'
-String author = 'cyberpwn'
-String description = 'An example Shuriken Plugin'
-String pluginsFolder = "C:\\Users\\cyberpwn\\Documents\\development\\server\\plugins";
+String main = group + '.PCP'
+String author = 'Puretie'
+String description = "Pureties Custom Projectiles"
+String pluginsFolder = "C:\\Users\\dabon\\Documents\\development\\server\\plugins";
 
 // ========== Dependencies ==========
 dependencies {
     implementation 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT'
     implementation 'ninja.bytecode.shuriken:shuriken-bukkit:2.0.8'
+    implementation 'ninja.bytecode.shuriken:shuriken-core:2.0.8'
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
 
     // You can implement libraries as classpath only if they are already on mc servers
     // implementation 'some:library:2.2.3'
@@ -51,7 +54,6 @@ void configureShadow(boolean dev, String pluginsFolder)
 
     shadowJar {
         zip64 true
-        minimize()
         configurations = [project.configurations.shade]
         archiveFileName = dev ? archiveFilePath : archiveFilePathRelease
     }
