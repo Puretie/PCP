@@ -3,6 +3,8 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
+apply plugin: 'java-library'
+
 // Configuration for shading your plugin's dependencies but not implementations
 configurations {
     shade.extendsFrom implemetation
@@ -19,9 +21,10 @@ String pluginsFolder = "C:\\Users\\dabon\\Documents\\development\\server\\plugin
 
 // ========== Dependencies ==========
 dependencies {
-    implementation 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT'
-    implementation 'ninja.bytecode.shuriken:shuriken-bukkit:2.0.8'
-    implementation 'ninja.bytecode.shuriken:shuriken-core:2.0.8'
+    // Uses the latest implementation of shuriken
+    compile 'ninja.bytecode.shuriken:shuriken-bukkit:latest.integration'
+
+    // Lombok support
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
 
