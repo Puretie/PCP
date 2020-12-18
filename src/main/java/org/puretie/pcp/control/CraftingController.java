@@ -1,20 +1,21 @@
 package org.puretie.pcp.control;
 
-import ninja.bytecode.shuriken.bukkit.bukkit.plugin.Controller;
+
+import ninja.bytecode.shuriken.bukkit.plugin.Controller;
 import ninja.bytecode.shuriken.bukkit.util.text.C;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.TippedArrow;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.puretie.pcp.PCP;
 
 public class CraftingController extends Controller
 {
 
-    private NamespacedKey key = new NamespacedKey(PCP.instance, "poparrow");
+    private NamespacedKey key = new NamespacedKey((Plugin) PCP.instance, "poparrow");
 
     @Override
     public void start()

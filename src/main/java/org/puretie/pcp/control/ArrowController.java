@@ -1,14 +1,15 @@
 package org.puretie.pcp.control;
 
-import api.CustomArrow;
-import arrows.ConcussiveArrow;
-import arrows.ConductiveArrow;
-import arrows.EnderArrow;
-import arrows.ImpulseArrow;
-import ninja.bytecode.shuriken.bukkit.bukkit.plugin.Controller;
-import ninja.bytecode.shuriken.bukkit.bukkit.plugin.JarScannerSpecial;
+
+import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.SneakyThrows;
+import ninja.bytecode.shuriken.bukkit.plugin.Controller;
+import ninja.bytecode.shuriken.bukkit.plugin.JarScannerSpecial;
 import ninja.bytecode.shuriken.collections.KList;
-import org.bukkit.Registry;
+import ninja.bytecode.shuriken.io.FolderWatcher;
+import ninja.bytecode.shuriken.io.IO;
+import ninja.bytecode.shuriken.json.JSONObject;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,24 +18,52 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.puretie.pcp.PCP;
+import org.puretie.pcp.api.CustomArrow;
 
-import java.io.IOException;
+import java.io.File;
 
 public class ArrowController extends Controller
 {
+    private FolderWatcher fw;
+    @Getter
     private KList<CustomArrow> registry = new KList<>();
     @Override
     public void start()
     {
-        registry.add(new ConcussiveArrow());
-        registry.add(new ConductiveArrow());
-        registry.add(new ImpulseArrow());
-        registry.add(new EnderArrow());
+        setTickRate(20);
+        load();
+    }
+
+    @SneakyThrows
+    private void load()
+    {
         for(CustomArrow i : registry)
         {
-            i.register();
+            i.unregister();
         }
+        registry.clear();
+        JarScannerSpecial s = new JarScannerSpecial(PCP.instance.getJar(), "org.puretie.pcp.arrows");
+        s.scan();
+        s.getClasses().forEach((i) -> {
+            try
+            {
+                File config = PCP.instance.getDataFile("config", i.getSimpleName().toLowerCase().replaceAll("\\Qarrow\\E", "") + ".json");
+                CustomArrow temp = (CustomArrow) i.getConstructor().newInstance();
+                if(!config.exists())
+                {
+                    IO.writeAll(config, new JSONObject(new Gson().toJson(temp)).toString(4));
+                }
+                CustomArrow c = new Gson().fromJson(IO.readAll(config), (Class<? extends CustomArrow>) i);
+                c.register();
+                registry.add(c);
+            } catch (Throwable e)
+            {
+                e.printStackTrace();
+            }
+        });
+        fw = new FolderWatcher(PCP.instance.getDataFolder("config"));
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void on(ProjectileLaunchEvent e)
     {
@@ -84,7 +113,7 @@ public class ArrowController extends Controller
         {
             if(i.getAirborneEntities().remove((Integer)e.getEntity().getEntityId()))
             {
-                i.hit(e.getEntity());
+                i.hit(e.getEntity(), e);
                 return;
             }
         }
@@ -111,7 +140,6 @@ public class ArrowController extends Controller
                     case TIPPED_ARROW:
                         return item;
                 }
-            w("Uncaught arrow type:" + item.getType());
         }
         return null;
     }
@@ -128,6 +156,9 @@ public class ArrowController extends Controller
     @Override
     public void tick()
     {
-
+        if(fw.checkModified()){
+            load();
+            l("Configs Hotloaded... Like magic!");
+        }
     }
 }

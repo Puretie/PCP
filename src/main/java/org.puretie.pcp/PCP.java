@@ -1,20 +1,25 @@
 package org.puretie.pcp;
 
-import com.google.gson.GsonBuilder;
-import lombok.Data;
+
 import lombok.Getter;
-import ninja.bytecode.shuriken.bukkit.bukkit.plugin.Control;
-import ninja.bytecode.shuriken.bukkit.bukkit.plugin.Instance;
-import ninja.bytecode.shuriken.bukkit.bukkit.plugin.ShurikenPlugin;
+import ninja.bytecode.shuriken.bukkit.command.Command;
+import ninja.bytecode.shuriken.bukkit.plugin.Control;
+import ninja.bytecode.shuriken.bukkit.plugin.Instance;
+import ninja.bytecode.shuriken.bukkit.plugin.ShurikenPlugin;
 import ninja.bytecode.shuriken.bukkit.util.text.C;
 import ninja.bytecode.shuriken.bukkit.util.text.TXT;
+import org.puretie.pcp.commands.CommandPCP;
 import org.puretie.pcp.control.ArrowController;
 import org.puretie.pcp.control.CraftingController;
 
 import java.io.File;
 
 
-public class PCP extends ShurikenPlugin {
+public class PCP extends ShurikenPlugin
+{
+
+    @Command
+    private CommandPCP pcp;
     public File getJar()
     {
         return getFile();
