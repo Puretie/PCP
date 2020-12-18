@@ -1,4 +1,4 @@
-package api;
+package org.puretie.pcp.api;
 
 
 import ninja.bytecode.shuriken.bukkit.world.Area;

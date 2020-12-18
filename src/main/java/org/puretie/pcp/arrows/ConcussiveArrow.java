@@ -1,6 +1,6 @@
-package arrows;
+package org.puretie.pcp.arrows;
 
-import api.CustomArrow;
+import org.puretie.pcp.api.CustomArrow;
 import ninja.bytecode.shuriken.bukkit.util.text.C;
 import org.bukkit.Material;
 import org.bukkit.entity.Projectile;
@@ -11,6 +11,8 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 public class ConcussiveArrow extends CustomArrow
 {
+    private float power = 2.4f;
+
     public ConcussiveArrow()
     {
         super(C.YELLOW + "Concussive Arrow");
@@ -41,6 +43,6 @@ public class ConcussiveArrow extends CustomArrow
     @Override
     public void hit(Projectile p, ProjectileHitEvent e)
     {
-        p.getWorld().createExplosion(p.getLocation(), 2.4f, false, false);
+        p.getWorld().createExplosion(p.getLocation(), power, false, false);
     }
 }

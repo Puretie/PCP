@@ -1,4 +1,4 @@
-package api;
+package org.puretie.pcp.api;
 
 import lombok.Data;
 import ninja.bytecode.shuriken.bukkit.util.text.C;
@@ -16,14 +16,13 @@ import org.puretie.pcp.PCP;
 @Data
 public abstract class CustomArrow
 {
-    private final KList<Integer> airborneEntities = new KList<>();
-    private final String name;
-    private final int id;
-    private static int _id = 13377;
+    private transient final KList<Integer> airborneEntities = new KList<>();
+    private transient final String name;
+    private transient final int id;
     public CustomArrow(String name)
     {
         this.name = name;
-        this.id = _id++;
+        this.id = name.hashCode();
     }
     public NamespacedKey getKey(){
         return new NamespacedKey((Plugin) PCP.instance, getRegisteredName());

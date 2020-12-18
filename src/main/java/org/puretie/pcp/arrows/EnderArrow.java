@@ -1,7 +1,7 @@
-package arrows;
+package org.puretie.pcp.arrows;
 
 
-import api.CustomArrow;
+import org.puretie.pcp.api.CustomArrow;
 import ninja.bytecode.shuriken.bukkit.sched.SR;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

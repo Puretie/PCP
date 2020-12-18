@@ -1,7 +1,7 @@
-package arrows;
+package org.puretie.pcp.arrows;
 
-import api.CustomArrow;
-import api.Impull;
+import org.puretie.pcp.api.CustomArrow;
+import org.puretie.pcp.api.Impull;
 import ninja.bytecode.shuriken.bukkit.util.text.C;
 import org.bukkit.Material;
 import org.bukkit.entity.Projectile;
@@ -12,6 +12,9 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 public class ImpulseArrow extends CustomArrow
 {
+    private double radius = 10;
+    private double damage = 3;
+
     public ImpulseArrow()
     {
         super(C.RED + "Impulse Arrow");
@@ -42,7 +45,7 @@ public class ImpulseArrow extends CustomArrow
     @Override
     public void hit(Projectile p, ProjectileHitEvent e)
     {
-        new Impull(10).damage(3).force(10, 10).punch(p.getLocation());
+        new Impull(radius).damage(damage).force(10, 10).punch(p.getLocation());
 
     }
 }

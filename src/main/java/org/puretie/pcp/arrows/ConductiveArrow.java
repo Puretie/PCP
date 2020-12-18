@@ -1,6 +1,6 @@
-package arrows;
+package org.puretie.pcp.arrows;
 
-import api.CustomArrow;
+import org.puretie.pcp.api.CustomArrow;
 import ninja.bytecode.shuriken.bukkit.util.text.C;
 import org.bukkit.Material;
 import org.bukkit.entity.Projectile;
