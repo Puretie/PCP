@@ -7,6 +7,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -76,7 +77,7 @@ public class EnderArrow extends CustomArrow
     }
 
     @Override
-    public void hit(Projectile p)
+    public void hit(Projectile p, ProjectileHitEvent e)
     {
         if(p.getShooter() instanceof Entity)
         {

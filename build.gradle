@@ -100,3 +100,9 @@ task jarDevelopment {
     dependsOn 'configDev'
     dependsOn 'shadowJar'
 }
+
+task noBsJarDev{
+    group 'shuriken'
+    dependsOn 'clean'
+    dependsOn 'jarDevelopment'
+}

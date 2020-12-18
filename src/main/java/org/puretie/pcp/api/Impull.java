@@ -1,8 +1,8 @@
 package api;
 
 
-import ninja.bytecode.shuriken.bukkit.api.world.Area;
-import ninja.bytecode.shuriken.bukkit.api.world.VectorMath;
+import ninja.bytecode.shuriken.bukkit.world.Area;
+import ninja.bytecode.shuriken.bukkit.world.VectorMath;
 import ninja.bytecode.shuriken.collections.KList;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

@@ -6,6 +6,7 @@ import ninja.bytecode.shuriken.collections.KList;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -50,5 +51,5 @@ public abstract class CustomArrow
     }
     public abstract Recipe buildRecipe();
     public abstract void fire(Projectile p);
-    public abstract void hit(Projectile p);
+    public abstract void hit(Projectile p, ProjectileHitEvent e);
 }

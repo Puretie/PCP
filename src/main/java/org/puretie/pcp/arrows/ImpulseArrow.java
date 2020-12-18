@@ -2,13 +2,10 @@ package arrows;
 
 import api.CustomArrow;
 import api.Impull;
-import ninja.bytecode.shuriken.bukkit.api.fx.EffectCauldronAcceptItem;
-import ninja.bytecode.shuriken.bukkit.api.world.Explosion;
-import ninja.bytecode.shuriken.bukkit.api.world.Impulse;
 import ninja.bytecode.shuriken.bukkit.util.text.C;
-import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -43,7 +40,7 @@ public class ImpulseArrow extends CustomArrow
     }
 
     @Override
-    public void hit(Projectile p)
+    public void hit(Projectile p, ProjectileHitEvent e)
     {
         new Impull(10).damage(3).force(10, 10).punch(p.getLocation());
 
