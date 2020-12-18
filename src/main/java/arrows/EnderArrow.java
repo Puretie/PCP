@@ -1,10 +1,8 @@
 package arrows;
 
+
 import api.CustomArrow;
-import ninja.bytecode.shuriken.bukkit.api.sched.SR;
-import ninja.bytecode.shuriken.bukkit.api.world.VectorMath;
-import ninja.bytecode.shuriken.bukkit.util.text.C;
-import ninja.bytecode.shuriken.random.RNG;
+import ninja.bytecode.shuriken.bukkit.sched.SR;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,8 +10,8 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
+import ninja.bytecode.shuriken.bukkit.util.text.C;
 
 public class EnderArrow extends CustomArrow
 {

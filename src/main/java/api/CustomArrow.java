@@ -9,6 +9,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.puretie.pcp.PCP;
 
 @Data
@@ -24,7 +25,7 @@ public abstract class CustomArrow
         this.id = _id++;
     }
     public NamespacedKey getKey(){
-        return new NamespacedKey(PCP.instance, getRegisteredName());
+        return new NamespacedKey((Plugin) PCP.instance, getRegisteredName());
 
     }
     public String getRegisteredName(){
