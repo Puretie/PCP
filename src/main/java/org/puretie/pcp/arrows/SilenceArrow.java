@@ -1,5 +1,6 @@
 package org.puretie.pcp.arrows;
 
+import ninja.bytecode.shuriken.bukkit.sched.J;
 import ninja.bytecode.shuriken.bukkit.util.text.C;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -15,10 +16,16 @@ import java.util.List;
 public class SilenceArrow extends CustomArrow
 {
     private double radius = 8;
+    private int durationInSeconds = 10;
 
     public SilenceArrow()
     {
         super(C.BLACK + "Silence Arrow");
+    }
+
+    public int getDurationInSeconds()
+    {
+        return (durationInSeconds * 20);
     }
 
     @Override
@@ -54,10 +61,17 @@ public class SilenceArrow extends CustomArrow
             List<Entity> ez = e.getHitEntity().getNearbyEntities(xx,yy,zz);
             e.getHitEntity().setSilent(true);
 
+
             for(int i = 0; i < ez.size(); i++)
             {
                 ez.get(i).setSilent(true);
             }
+            J.s(() -> {
+                for(int i = 0; i < ez.size(); i++)
+                {
+                    ez.get(i).setSilent(false);
+                }
+            }, getDurationInSeconds());
         }
     }
 }
